@@ -10,8 +10,11 @@ import java.io.IOException;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ConnectionTest {
     private Connection connection;
@@ -24,6 +27,7 @@ public class ConnectionTest {
         connection = new Connection(clientMock);
 
         requestMock = mock(Request.class);
+        when(requestMock.getUrl()).thenReturn("/path/to/place");
     }
 
     @Test
@@ -39,7 +43,10 @@ public class ConnectionTest {
 
     @Test
     public void openConnectionAndRequestMade() {
-        connection.open(requestMock);
+        assertThat(
+            connection.open(requestMock),
+            instanceOf(ApacheResponse.class)
+        );
     }
 
     @Test
