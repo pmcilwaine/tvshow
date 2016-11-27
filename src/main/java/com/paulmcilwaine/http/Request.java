@@ -1,6 +1,5 @@
 package com.paulmcilwaine.http;
 
 public interface Request {
-    String getUrl();
-    String getMethod();
+    Response execute(URIBuilderInterface uriBuilder);
 }
