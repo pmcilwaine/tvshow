@@ -3,6 +3,7 @@ package com.paulmcilwaine.http.apache;
 import com.paulmcilwaine.http.ConnectionCloseException;
 import com.paulmcilwaine.http.Request;
 import com.paulmcilwaine.http.Response;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
@@ -17,9 +18,16 @@ public class Connection implements com.paulmcilwaine.http.Connection {
 
     @Override
     public Response open(Request request) {
-        isOpen = true;
 
-        return null;
+        ApacheResponse response = null;
+
+        try {
+            response = new ApacheResponse(client.execute(new HttpGet(request.getUrl())));
+            isOpen = true;
+        } catch (IOException e) {
+        }
+
+        return response;
     }
 
     @Override
