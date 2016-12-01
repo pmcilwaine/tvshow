@@ -22,6 +22,7 @@ public class ApacheResponse implements Response {
                 stringBuilder.append((char)inputStream.read());
             }
 
+            inputStream.close();
             return stringBuilder.toString();
         } catch (IOException e) {
             // just catch for now, no throwing. Update interface if we want to throw.
